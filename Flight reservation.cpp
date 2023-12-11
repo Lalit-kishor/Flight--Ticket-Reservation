@@ -1,457 +1,492 @@
-#include<iostream>
-#include<fstream>
-#include<iomanip> // floating point values
+#include <conio.h>
+#include <cstdio>
+#include<limits>
+#include <iostream>
+#include <string.h>
+#include <cstdlib>
 
 using namespace std;
 
-void mainMenu();
+static int t = 0;
 
-class Management
+class Airport
+
 {
-    public:
-        Management()
-        {
-            mainMenu();
-        }
-};
 
-class Details
+    char flight_number[5], flight_name[20], flight_arrival[10], flight_depart[10], from[20], to[20], flight_seat[8][4][20];
+
+public:
+
+    void add_new_flight();
+
+    void reservation();
+    
+    void cancellation();
+
+    void empty();
+
+    void view();
+
+    void avail();
+
+    void position(int i);
+
+}flight[50];
+
+void border_line(char ch)
+
 {
-    public:
-        static string name,gender;
-        int phoneNo,age;
-        string address;
 
-        static int cId;
-        char arr[100];
+    for (int x=80; x>0; x--)
 
-        void information()
-        {
-            cout<<"\nEnter the customer ID : ";
-            cin>>cId;
-            cout<<"\nEnter the name : ";
-            cin>>name;
-            cout<<"\nEnter the age : ";
-            cin>>age;
-            cout<<"\nAddress : ";
-            cin>>address;
-            cout<<"\nGender : ";
-            cin>>gender;
+        cout<<ch;
 
-            cout<<"Your details have been saved with us\n"<<endl; 
-        }
+}
 
-};
+void Airport::add_new_flight()
 
-int Details::cId;
-string Details::name;
-string Details::gender;
-
-class registration
 {
-    public:
-        static int choice;
-        int choice1,back;
-        static float charges;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-        void flights()
-        {
-            string flightN[] = {"Dubai","Canada","Britain","USA"};
+    cout<<"Enter flight Number: ";
 
-            for(int a=0;a<4;a++)
-            {
-                cout<<(a+1)<<".flight to "<<flightN[a]<<endl;
-            }
+    cin.getline(flight[t].flight_number,5);
 
-            cout<<"\nWelcome to the Airlines"<<endl;
-            cout<<"Enter destination : ";
-            cin>>choice;
+    cout<<"\nEnter flight Name: ";
 
-            switch(choice)
-            {
-                case 1:
-                {
-                    cout<<"__________________Welcome to Dubai Emirates______________\n"<<endl;
+    cin.getline(flight[t].flight_name,20);
 
-                    cout<<"Your comfort is our priority. Enjoy the journey !"<<endl;
-                    cout<<"Following are the flights \n"<<endl;
+    cout<<"\nArrival Time: ";
 
-                    cout<<"1. DUB - 498"<<endl;
+    cin.getline(flight[t].flight_arrival,10);
 
-                    cout<<"\t08-01-2022  8:00 AM  10hrs Rs. 14000"<<endl;
-                    cout<<"2. DUB - 658"<<endl;
+    cout<<"\nDeparture: ";
 
-                    cout<<"\t09-01-2022  10:00 AM  12hrs Rs. 10000"<<endl;
-                    cout<<"3. DUB - 888"<<endl;
+    cin.getline(flight[t].flight_depart,10);
 
-                    cout<<"\t12-01-2022  11:00 PM  15hrs Rs. 9000"<<endl;
+    cout<<"\nFrom: ";
 
-                    cout<<"Select the flight you want to book : ";
-                    cin>>choice1;
+    cin.getline(flight[t].from,20);
 
-                    if(choice1==1)
-                    {
-                        charges = 14000;
-                        cout<<"\nYou have successfully booked the flight No. DUB - 498"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==2)
-                    {
-                        charges = 10000;
-                        cout<<"\nYou have successfully booked the flight No. DUB - 658"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==3)
-                    {
-                        charges = 9000;
-                        cout<<"\nYou have successfully booked the flight No. DUB - 888"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else
-                    {
-                        cout<<"Invalid input, shifting to the previous Menu"<<endl;
-                        flights();
-                    }
-                    cout<<"Press any key to go back to Main Menu"<<endl;
-                    cin>>back;
+    cout<<"\nTo: ";
 
-                    if(back==1)
-                    {
-                        mainMenu();
-                    }
-                    else
-                    {
-                        mainMenu();
-                    }
-                }
-                case 2:
-                {
-                    cout<<"__________________Welcome to Canadian Airlines______________\n"<<endl;
+    cin.getline(flight[t].to,20);
 
-                    cout<<"Your comfort is our priority. Enjoy the journey !"<<endl;
-                    cout<<"Following are the flights \n"<<endl;
+    flight[t].empty();
+    cout<<"\nNew flight Added Successfully \t\t\t";
+    t++;
 
-                    cout<<"1. CAN - 234"<<endl;
+}
 
-                    cout<<"\t18-01-2022  6:00 AM  11hrs Rs. 16000"<<endl;
-                    cout<<"2. CAN - 253"<<endl;
+void Airport::reservation()
 
-                    cout<<"\t20-01-2022  10:00 PM  13hrs Rs. 13000"<<endl;
-                    cout<<"3. CAN - 289"<<endl;
-
-                    cout<<"\t12-01-2022  12:00 PM  8hrs Rs. 29000"<<endl;
-
-                    cout<<"Select the flight you want to book : ";
-                    cin>>choice1;
-
-                    if(choice1==1)
-                    {
-                        charges = 16000;
-                        cout<<"\nYou have successfully booked the flight No. CAN - 234"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==2)
-                    {
-                        charges = 13000;
-                        cout<<"\nYou have successfully booked the flight No. CAN - 253"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==3)
-                    {
-                        charges = 29000;
-                        cout<<"\nYou have successfully booked the flight No. DUB - 289"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else
-                    {
-                        cout<<"Invalid input, shifting to the previous Menu"<<endl;
-                        flights();
-                    }
-                    cout<<"Press any key to go back to Main Menu"<<endl;
-                    cin>>back;
-
-                    if(back==1)
-                    {
-                        mainMenu();
-                    }
-                    else
-                    {
-                        mainMenu();
-                    }
-                }
-                case 3:
-                {
-                    cout<<"__________________Welcome to Britain Airlines______________\n"<<endl;
-
-                    cout<<"Your comfort is our priority. Enjoy the journey !"<<endl;
-                    cout<<"Following are the flights \n"<<endl;
-
-                    cout<<"1. UK - 101"<<endl;
-
-                    cout<<"\t02-02-2022  4:00 AM  23hrs Rs. 56000"<<endl;
-                    cout<<"2. UK - 102"<<endl;
-
-                    cout<<"\t16-02-2022  2:00 PM  26hrs Rs. 48000"<<endl;
-                    cout<<"3. UK - 103"<<endl;
-
-                    cout<<"\t25-02-2022  12:00 AM  18hrs Rs. 68000"<<endl;
-
-                    cout<<"Select the flight you want to book : ";
-                    cin>>choice1;
-
-                    if(choice1==1)
-                    {
-                        charges = 56000;
-                        cout<<"\nYou have successfully booked the flight No. UK - 101"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==2)
-                    {
-                        charges = 48000;
-                        cout<<"\nYou have successfully booked the flight No. UK - 102"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==3)
-                    {
-                        charges = 68000;
-                        cout<<"\nYou have successfully booked the flight No. UK - 103"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else
-                    {
-                        cout<<"Invalid input, shifting to the previous Menu"<<endl;
-                        flights();
-                    }
-                    cout<<"Press any key to go back to Main Menu"<<endl;
-                    cin>>back;
-
-                    if(back==1)
-                    {
-                        mainMenu();
-                    }
-                    else
-                    {
-                        mainMenu();
-                    }
-
-                }
-                case 4:
-                {
-                    cout<<"__________________Welcome to American Airlines______________\n"<<endl;
-
-                    cout<<"Your comfort is our priority. Enjoy the journey !"<<endl;
-                    cout<<"Following are the flights \n"<<endl;
-
-                    cout<<"1. USA - 932"<<endl;
-
-                    cout<<"\t03-01-2022  3:00 PM  40hrs Rs. 66000"<<endl;
-                    cout<<"2. USA - 933"<<endl;
-
-                    cout<<"\t05-01-2022  7:00 PM  45hrs Rs. 61000"<<endl;
-                    cout<<"3. USA - 934"<<endl;
-
-                    cout<<"\t12-01-2022  1:00 AM  36hrs Rs. 79000"<<endl;
-
-                    cout<<"Select the flight you want to book : ";
-                    cin>>choice1;
-
-                    if(choice1==1)
-                    {
-                        charges = 66000;
-                        cout<<"\nYou have successfully booked the flight No. USA - 932"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==2)
-                    {
-                        charges = 61000;
-                        cout<<"\nYou have successfully booked the flight No. USA - 933"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else if(choice1==3)
-                    {
-                        charges = 79000;
-                        cout<<"\nYou have successfully booked the flight No. USA - 934"<<endl;
-                        cout<<"You can go back to menu and take the ticket;"<<endl;
-                    }
-                    else
-                    {
-                        cout<<"Invalid input, shifting to the previous Menu"<<endl;
-                        flights();
-                    }
-                    cout<<"Press any key to go back to Main Menu"<<endl;
-                    cin>>back;
-
-                    if(back==1)
-                    {
-                        mainMenu();
-                    }
-                    else
-                    {
-                        mainMenu();
-                    }
-                }
-                default:
-                {
-                    cout<<"Invalid input, shifting to the Main Menu"<<endl;
-                    mainMenu();
-                    break;
-                } 
-            }
-        }
-};
-
-float registration::charges;
-int registration::choice;
-
-class ticket : public registration,Details
 {
-    public:
-     
-     void Bill()
-     {
-        string destination="";
-        ofstream outf("records.txt");
-        {
-            outf<<"______________AirAsia Airlines_____________"<<endl;
-            outf<<"___________________Ticket__________________"<<endl;
-            outf<<"___________________________________________"<<endl;
 
-            outf<<"Customer ID : "<<Details::cId<<endl;
-            outf<<"Customer Name : "<<Details::name<<endl;
-            outf<<"Customer Gender : "<<Details::gender<<endl;
-            outf<<"\tDescription"<<endl<<endl;
+    int flight_seat;
 
-            if(registration::choice==1)
-            {
-                destination = "Dubai";
-            }
-            else if(registration::choice==2)
-            {
-                destination = "Canada";
-            }
-            else if(registration::choice==3)
-            {
-                destination = "Britain";
-            }
-            else if(registration::choice==4)
-            {
-                destination = "USA";
-            }
+    char no[5];
 
-            outf<<"Destination\t\t"<<destination<<endl;
-            outf<<"Flight cost :\t\t"<<registration::charges<<endl;
-        }
-        outf.close();
-     }
-    void dispBill()
+top:
+
+    cout<<"flight Number: ";
+
+    cin>>no;
+
+    int y;
+
+    for(y=0; y<=t; y++)
+
     {
-        ifstream ifs("records.txt");
-        {
-            if(!ifs)
-                cout<<"File Error !"<<endl;
-            
-            // while(!ifs.eof())
-            // {
-            //     ifs.getline(arr,100);
-            //     cout<<arr<<endl;
-            // }
 
-            while (ifs.getline(arr, 100)) {
-                cout << arr << endl;
-            }
-        }
-        ifs.close();
+        if(strcmp(flight[y].flight_number, no)==0)
+
+            break;
+
     }
-};
-void mainMenu()
-{
-    int lchoice,schoice,back;
 
-    cout<<"\t            Airasia Airline \n"<<endl;
-    cout<<"\t_______________Main Menu_____________"<<endl;
-    cout<<"\t_____________________________________"<<endl;
-    cout<<"\t\t\t\t\t\t\t"<<endl;
+    while(y<=t)
 
-    cout<<"\t|\t Press 1 to add the customer details  \t|"<<endl;
-    cout<<"\t|\t Press 2 for flight registration  \t|"<<endl;
-    cout<<"\t|\t Press 3 for Ticket and Charges  \t|"<<endl;
-    cout<<"\t|\t Press 4 to exit  \t\t\t|"<<endl;
-    cout<<"\t\t\t\t\t\t\t"<<endl; 
-    cout<<"\t_____________________________________"<<endl;
-
-    cout<<"Enter the Choice : ";
-    cin>>lchoice;
-
-    Details d;
-    registration r;
-    ticket t;
-
-    switch(lchoice)
     {
-        case 1:
-        {
-            cout<<"___________Customers_____________\n"<<endl;
-            d.information();
-            cout<<"Press any to go back to Main Menu";
-            cin>>back; 
 
-            if(back==1)
+        cout<<"\nSeat Number: ";
+
+        cin>>flight_seat;
+
+        if(flight_seat>32)
+
+        {
+
+            cout<<"\nThere are only 32 Seats Available in this flight.";
+
+        }
+
+        else
+
+        {
+
+            if (strcmp(flight[y].flight_seat[flight_seat/4][(flight_seat%4)-1], "-")==0)
+
             {
-                mainMenu();
+
+                cout<<"Enter Passenger's Name: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
+                cin.getline(flight[y].flight_seat[flight_seat/4][(flight_seat%4)-1],20);
+                cout<<"\nTicket has been booked Successfully.🎉"
+                break;
+
             }
+
             else
-            {
-                mainMenu();
-            }
+
+                cout<<"This Seat Number is Already Reserved.😥\n";
+
         }
-        case 2:
-        {
-            cout<<"___________Book a flight using this system_________\n"<<endl;
-            r.flights();
+
+    }
+
+    if(y>t)
+
+    {
+
+        cout<<"Enter Correct flight Number.\n";
+
+        goto top;
+
+    }
+
+}
+
+void Airport::cancellation()
+{
+    int flight_seat;
+
+    char no[5];
+
+    top:
+
+    cout<<"flight Number: ";
+
+    cin>>no;
+
+    int y;
+
+    for(y=0; y<=t; y++)
+
+    {
+
+        if(strcmp(flight[y].flight_number, no)==0)
+
             break;
-        }
-        case 3:
+
+    }
+
+    while(y<=t)
+
+    {
+
+        cout<<"\nSeat Number: ";
+
+        cin>>flight_seat;
+
+        if(flight_seat>32)
+
         {
-            cout<<"____________Get your ticket___________\n"<<endl;
-            t.Bill();
 
-            cout<<"Your ticket has been printed, you cam collect it \n"<<endl;
-            cout<<"Press 1 to display your ticket";
+            cout<<"\nThere are only 32 Seats Available in this flight.";
 
-            cin>>back;
+        }
 
-            if(back==1)
+        else
+
+        {
+
+            if (strcmp(flight[y].flight_seat[flight_seat/4][(flight_seat%4)-1], "-")!=0)
+
             {
-                t.dispBill();
-                cout<<"Press any key to go back to Main Menu:";
-                cin>>back;
+                strcpy(flight[y].flight_seat[flight_seat/4][(flight_seat%4)-1], "-");  // cancelled
+                cout<<"Ticket has been cancelled Successfully.\n";
+                break;
 
-                if(back==1)
-                    mainMenu();
-                else
-                    mainMenu();
             }
+
             else
-            {
-                mainMenu();
-            }
-            break;
+
+                cout<<"This Seat Number is Already Cancelled.\n";
+
         }
-        case 4:
-        {
-            cout<<"\n\n\t_________Thank-you__________"<<endl;
-            break;
-        }
-        default:
-        {
-            cout<<"Invalid input, Please try again!\n"<<endl;
-            mainMenu();
-            break;
-        }
+
+    }
+
+    if(y>t)
+
+    {
+
+        cout<<"Enter Correct flight Number.\n";
+
+        goto top;
+
     }
 }
-int main()
+
+void Airport::empty()
+
 {
-    Management Mobj;
+
+    for(int x=0; x<8; x++)
+
+    {
+
+        for(int z=0; z<4; z++)
+
+        {
+
+            strcpy(flight[t].flight_seat[x][z], "-");
+
+        }
+
+    }
+
+}
+
+void Airport::view()
+
+{
+
+    int m;
+
+    char number[5];
+
+    cout<<"Enter flight Number: ";
+
+    cin>>number;
+
+    for(m=0; m<=t; m++)
+
+    {
+
+        if(strcmp(flight[m].flight_number, number)==0)
+
+            break;
+
+    }
+
+    while(m<=t)
+
+    {
+
+        border_line('*');
+        cout<<endl;
+        
+        cout<<"flight Number: \t"<<flight[m].flight_number
+
+            <<"\nflight Name: \t"<<flight[m].flight_name<<"\t\tArrival Time: \t"
+
+            <<flight[m].flight_arrival<<"\tDeparture Time:\t"<<flight[m].flight_depart
+
+            <<endl<<"\nFrom: \t\t"<<flight[m].from<<"\t\tTo: "<<
+
+            flight[m].to<<"\n";
+
+        border_line('*');
+
+        flight[0].position(m);
+
+        int d=1;
+
+        for (int x=0; x<8; x++)
+
+        {
+
+            for(int y=0; y<4; y++)
+
+            {
+
+                d++;
+
+                if(strcmp(flight[m].flight_seat[x][y],"-")!=0)
+
+                    cout<<"\nThe Seat no "<<(d-1)<<" is Reserved for "<<flight[m].flight_seat[x][y]<<".";
+
+            }
+
+        }
+
+        break;
+
+    }
+
+    if(m>t)
+
+        cout<<"Enter Correct flight Number: ";
+
+}
+
+void Airport::position(int l)
+
+{
+
+    int r=0;
+    t=0;
+
+    for (int x =0; x<8; x++)
+
+    {
+
+        cout<<"\n";
+
+        for (int z = 0; z<4; z++)
+
+        {
+
+            r++;
+
+            if(strcmp(flight[l].flight_seat[x][z], "-")==0)
+
+            {
+
+                cout.width(5);
+
+                cout.fill(' ');
+
+                cout<<r<<".";
+
+                cout.width(10);
+
+                cout.fill(' ');
+
+                cout<<flight[l].flight_seat[x][z];
+
+                t++;
+
+            }
+
+            else
+
+            {
+
+                cout.width(5);
+
+                cout.fill(' ');
+
+                cout<<r<<".";
+
+                cout.width(10);
+
+                cout.fill(' ');
+
+                cout<<flight[l].flight_seat[x][z];
+
+            }
+
+        }
+
+    }
+
+    cout<<"\n\nThere are "<<t<<" Seats Empty in flight Number: "<<flight[l].flight_number;
+
+}
+
+void Airport::avail()
+
+{
+
+
+    for(int y=0; y<t; y++)
+
+    {
+
+        border_line('*');
+        cout<<endl;
+        
+        cout<<"flight Number: \t"<<flight[y].flight_number<<"\nflight Name: \t"<<flight[y].flight_name
+
+            <<"\t\tArrival Time: \t"<<flight[y].flight_arrival<<"\tDeparture Time:   "
+
+            <<flight[y].flight_depart<<endl<<"\nFrom: \t\t"<<flight[y].from<<"\t\tTo: "
+
+            <<flight[y].to<<"\n";
+
+        border_line('*');
+
+        //border_line('_');
+
+    }
+
+}
+
+int main()
+
+{
+
+    system("cls");
+
+    int w;
+
+    while(1)
+
+    {
+        //system("cls");
+        cout<<"\n\n";
+        cout<<"\t\t\t\t\t\t-------------------------------------\n";
+        cout<<"\t\t\t\t\t\t|   SIMPLE flight RESERVATION SYSTEM   |\n";
+        cout<<"\t\t\t\t\t\t-------------------------------------\n";
+        cout<<"\n";
+
+        cout<<"\n\n";
+
+        cout<<"\t\t\t\t\t\t\t1.Add New flight Number\n\t\t\t\t\t\t\t"
+
+            <<"2.Show Available flightes\n\t\t\t\t\t\t\t"
+
+            <<"3.Available seats\n\t\t\t\t\t\t\t"
+
+            <<"4.Book Ticket \n\t\t\t\t\t\t\t"
+
+            <<"5.Cancel Ticket \n\t\t\t\t\t\t\t"
+
+            <<"6.Exit";
+
+        cout<<"\n\n\n\t\t\t\t\t\tEnter your Choice:- ";
+
+        cin>>w;
+
+        switch(w)
+
+        {
+
+        case 1:
+            flight[t].add_new_flight();
+
+            break;
+        
+        case 2:
+            flight[0].avail();
+
+            break;
+
+        case 3:
+            flight[0].view();
+
+            break;
+            
+        case 4:
+            flight[t].reservation();
+
+            break;
+
+        case 5:
+            flight[t].cancellation();
+
+            break;
+
+        case 6:
+            exit(0);
+
+        }
+
+    }
+
     return 0;
+
 }
